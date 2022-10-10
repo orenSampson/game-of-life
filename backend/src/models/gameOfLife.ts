@@ -69,10 +69,21 @@ export class GameOfLife {
 
     return this.instance;
   }
-
+  //actions
   nextStep() {
     this.calculateNextStep();
     this.numOfSteps++;
+  }
+
+  reset() {
+    if (this.status === gameStatus.stop) {
+      this.numOfSteps = 0;
+
+      this.board = [...INIT_STATE];
+      for (let i = 0; i < this.board.length; i++) {
+        this.board[i] = [...INIT_STATE[i]];
+      }
+    }
   }
 
   protected numOfLiveBeighborsCalc(i: number, j: number) {
@@ -132,12 +143,9 @@ export class GameOfLife {
   }
 
   protected calculateNextStep() {
-    let nextStepBoard: BoardType = [...INIT_STATE];
-
+    const nextStepBoard: BoardType = [...INIT_STATE];
     for (let i = 0; i < this.board.length; i++) {
-      for (let j = 0; j < this.board[i].length; j++) {
-        nextStepBoard[i] = [...INIT_STATE[i]];
-      }
+      nextStepBoard[i] = [...INIT_STATE[i]];
     }
 
     for (let i = 0; i < this.board.length; i++) {
